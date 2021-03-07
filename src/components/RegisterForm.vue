@@ -2,10 +2,18 @@
   <form @submit.prevent="registerUser">
     <BaseInput
       type="text"
-      label="Name"
-      name="name"
-      v-model="name"
-      placeholder="Luke Skywalker"
+      label="First Name"
+      name="first_name"
+      v-model="firstName"
+      placeholder="Luke"
+      class="mb-2"
+    />
+    <BaseInput
+      type="text"
+      label="Last Name"
+      name="last_name"
+      v-model="lastName"
+      placeholder="Skywalker"
       class="mb-2"
     />
     <BaseInput
@@ -51,21 +59,27 @@ export default {
   },
   data() {
     return {
-      name: null,
+      first_name: null,
+      last_name: null,
       email: null,
       password: null,
       passwordConfirm: null,
       error: null,
+      status: null,
+      timezone: null
     };
   },
   methods: {
     registerUser() {
       this.error = null;
       const payload = {
-        name: this.name,
+        first_name: this.firstName,
+        last_name: this.lastName,
         email: this.email,
         password: this.password,
         password_confirmation: this.passwordConfirm,
+        status: "enabled",
+        timezone: "America/Chicago"
       };
       AuthService.registerUser(payload)
         .then(() => this.$router.push("/dashboard"))
